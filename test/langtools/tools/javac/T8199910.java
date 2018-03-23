@@ -1,12 +1,10 @@
 /*
- * Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
+ * published by the Free Software Foundation.
  *
  * This code is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
@@ -23,4 +21,23 @@
  * questions.
  */
 
-exports sun.nio.cs to java.desktop;
+/*
+ * @test
+ * @bug 8199910
+ * @summary Compile variables of intersection type inferred by `var` with -g option
+ * @compile -g T8199910.java
+ */
+import java.util.List;
+
+class T8199910 {
+    <T> T first(T... ts) {
+        return ts[0];
+    }
+
+    void m() {
+        var list1 = List.of("", 1);
+        var list2 = List.of(1, 2.0);
+        var a = first("", 1);
+        var b = first(1, 2.0);
+    }
+}
